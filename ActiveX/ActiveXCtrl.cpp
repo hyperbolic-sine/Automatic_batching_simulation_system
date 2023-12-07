@@ -1,0 +1,230 @@
+﻿// ActiveXCtrl.cpp : CActiveXCtrl ActiveX 控件类的实现。
+
+#include "pch.h"
+#include "framework.h"
+#include "ActiveX.h"
+#include "ActiveXCtrl.h"
+#include "ActiveXPropPage.h"
+#include "afxdialogex.h"
+#include "CPublic.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+IMPLEMENT_DYNCREATE(CActiveXCtrl, COleControl)
+
+// 消息映射
+
+BEGIN_MESSAGE_MAP(CActiveXCtrl, COleControl)
+	ON_OLEVERB(AFX_IDS_VERB_PROPERTIES, OnProperties)
+	ON_WM_CREATE()
+END_MESSAGE_MAP()
+
+// 调度映射
+
+BEGIN_DISPATCH_MAP(CActiveXCtrl, COleControl)
+	DISP_FUNCTION_ID(CActiveXCtrl, "SetCtrlParam", dispidSetCtrlParam, SetCtrlParam, VT_BOOL, VTS_I4 VTS_I4 VTS_I4 VTS_I4 VTS_I4 VTS_I4 VTS_I4)
+	DISP_FUNCTION_ID(CActiveXCtrl, "StopBtn", dispidStopBtn, StopBtn, VT_BOOL, VTS_NONE)
+END_DISPATCH_MAP()
+
+// 事件映射
+
+BEGIN_EVENT_MAP(CActiveXCtrl, COleControl)
+END_EVENT_MAP()
+
+// 属性页
+
+// TODO: 根据需要添加更多属性页。请记住增加计数!
+BEGIN_PROPPAGEIDS(CActiveXCtrl, 1)
+	PROPPAGEID(CActiveXPropPage::guid)
+END_PROPPAGEIDS(CActiveXCtrl)
+
+// 初始化类工厂和 guid
+
+IMPLEMENT_OLECREATE_EX(CActiveXCtrl, "MFCACTIVEXCONTRO.ActiveXCtrl.1",
+	0x52ea3b1f,0x329a,0x4b39,0xb0,0x44,0x68,0x24,0x0a,0x33,0x1d,0xf5)
+
+// 键入库 ID 和版本
+
+IMPLEMENT_OLETYPELIB(CActiveXCtrl, _tlid, _wVerMajor, _wVerMinor)
+
+// 接口 ID
+
+const IID IID_DActiveX = {0x073ae761,0xd378,0x40ef,{0x9a,0x2e,0x18,0x61,0x5a,0xeb,0xe2,0x2f}};
+const IID IID_DActiveXEvents = {0x4a1e15e7,0x2afc,0x4747,{0x93,0xd0,0x50,0x2b,0xfd,0x09,0x55,0x9b}};
+
+// 控件类型信息
+
+static const DWORD _dwActiveXOleMisc =
+	OLEMISC_ACTIVATEWHENVISIBLE |
+	OLEMISC_SETCLIENTSITEFIRST |
+	OLEMISC_INSIDEOUT |
+	OLEMISC_CANTLINKINSIDE |
+	OLEMISC_RECOMPOSEONRESIZE;
+
+IMPLEMENT_OLECTLTYPE(CActiveXCtrl, IDS_ACTIVEX, _dwActiveXOleMisc)
+
+// CActiveXCtrl::CActiveXCtrlFactory::UpdateRegistry -
+// 添加或移除 CActiveXCtrl 的系统注册表项
+
+BOOL CActiveXCtrl::CActiveXCtrlFactory::UpdateRegistry(BOOL bRegister)
+{
+	// TODO:  验证您的控件是否符合单元模型线程处理规则。
+	// 有关更多信息，请参考 MFC 技术说明 64。
+	// 如果您的控件不符合单元模型规则，则
+	// 必须修改如下代码，将第六个参数从
+	// afxRegApartmentThreading 改为 0。
+
+	if (bRegister)
+		return AfxOleRegisterControlClass(
+			AfxGetInstanceHandle(),
+			m_clsid,
+			m_lpszProgID,
+			IDS_ACTIVEX,
+			IDB_ACTIVEX,
+			afxRegApartmentThreading,
+			_dwActiveXOleMisc,
+			_tlid,
+			_wVerMajor,
+			_wVerMinor);
+	else
+		return AfxOleUnregisterClass(m_clsid, m_lpszProgID);
+}
+
+
+// CActiveXCtrl::CActiveXCtrl - 构造函数
+
+CActiveXCtrl::CActiveXCtrl()
+{
+	InitializeIIDs(&IID_DActiveX, &IID_DActiveXEvents);
+	// TODO:  在此初始化控件的实例数据。
+}
+
+// CActiveXCtrl::~CActiveXCtrl - 析构函数
+
+CActiveXCtrl::~CActiveXCtrl()
+{
+	// TODO:  在此清理控件的实例数据。
+}
+
+// CActiveXCtrl::OnDraw - 绘图函数
+
+void CActiveXCtrl::OnDraw(CDC* pdc, const CRect& rcBounds, const CRect& /* rcInvalid */)
+{
+	if (!pdc)
+		return;
+
+	// TODO:  用您自己的绘图代码替换下面的代码。
+	m_animatedlg.MoveWindow(rcBounds, 1);
+}
+
+// CActiveXCtrl::DoPropExchange - 持久性支持
+
+void CActiveXCtrl::DoPropExchange(CPropExchange* pPX)
+{
+	ExchangeVersion(pPX, MAKELONG(_wVerMinor, _wVerMajor));
+	COleControl::DoPropExchange(pPX);
+
+	// TODO: 为每个持久的自定义属性调用 PX_ 函数。
+}
+
+
+// CActiveXCtrl::GetControlFlags -
+// 自定义 MFC 的 ActiveX 控件实现的标志。
+//
+DWORD CActiveXCtrl::GetControlFlags()
+{
+	DWORD dwFlags = COleControl::GetControlFlags();
+
+
+	// 在活动和不活动状态之间进行转换时，
+	// 不会重新绘制控件。
+	dwFlags |= noFlickerActivate;
+	return dwFlags;
+}
+
+
+// CActiveXCtrl::OnResetState - 将控件重置为默认状态
+
+void CActiveXCtrl::OnResetState()
+{
+	COleControl::OnResetState();  // 重置 DoPropExchange 中找到的默认值
+
+	// TODO:  在此重置任意其他控件状态。
+}
+
+
+// CActiveXCtrl 消息处理程序
+
+
+int CActiveXCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (COleControl::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// TODO:  在此添加您专用的创建代码
+	m_animatedlg.Create(IDD_DIALOG_ANIMATE, this);
+
+	return 0;
+}
+
+BOOL CActiveXCtrl::SetCtrlParam(LONG m_A, LONG m_B, LONG m_C, LONG m_D, LONG m_E, LONG m_F, LONG times)
+{
+	CString res;
+	CPublic::materials[5] = m_A;
+	CPublic::materials[4] = m_B;
+	CPublic::materials[3] = m_C;
+	CPublic::materials[2] = m_D;
+	CPublic::materials[1] = m_E;
+	CPublic::materials[0] = m_F;
+	CPublic::totalTimes = times;
+
+	int sum = 0;
+	for (int i = 0; i < 6; i++)
+	{
+		sum += CPublic::materials[i];
+	}
+	CPublic::sum = sum;
+
+	TRY
+	{
+		// 提示框
+		CString str;
+		str.Format(TEXT("第 1 次配料, 共 %d 次"), times);
+		m_animatedlg.GetDlgItem(IDC_STATIC_CTIMES)->SetWindowTextW(str);
+
+		// 连接MySQL数据库 并 存储数据
+		CDatabase db;
+		try
+		{
+			// 以ODBC的方式启动MySQL数据库
+			// MySQL32：ODBC源数据库名称
+			db.Open(TEXT("MySQL32"), TRUE, FALSE, TEXT("ODBC,UID=root;PWD=Dilanxue&*943"), FALSE);
+			// SQL语句拼接
+			CString sql;
+			sql.Format(TEXT("insert into absdata.materials(Material_A, Material_B, Material_C, Material_D, Material_E, Material_F, CycleCriterion) values (%d, %d, %d, %d, %d, %d, %d)"), 
+				CPublic::materials[5], CPublic::materials[4], CPublic::materials[3], CPublic::materials[2], CPublic::materials[1], CPublic::materials[0], CPublic::totalTimes);
+			db.ExecuteSQL(sql);
+			db.Close();
+		}
+		catch (CDBException* e) {
+			return false;
+		}
+
+		// 启动动画 (启动定时器)
+		m_animatedlg.SetTimer(WMUSER_UPDATEPIC_TIMERID, 20, NULL);
+
+		return true;
+	}
+		CATCH(COleDispatchException, e)
+	{
+		return false;
+	}
+	END_CATCH
+}
+
+BOOL CActiveXCtrl::StopBtn()
+{
+	return m_animatedlg.stopRun();
+}

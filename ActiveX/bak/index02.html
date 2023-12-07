@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Test Page</title>
+	</head>
+	<body>
+		<object id="ActiveX" classid="CLSID:52ea3b1f-329a-4b39-b044-68240a331df5" width="800px" height="480px"></object>
+		<button onclick="deal()" style="padding: 10px 20px;">数据提交</button>
+		<button onclick="stopRun()" style="padding: 10px 20px;">停止配料</button>
+	<script>
+		var ABSobj = document.getElementById("ActiveX");
+
+		if (ABSobj.object == null) {
+			alert("ActiveX4ABSTest01插件未安装!");
+		}
+		
+		function deal() {
+			var res = ABSobj.SetCtrlParam(10, 2, 0, 0, 45, 0, 3);
+			if (res) {
+				alert("开始模拟");
+			} else {
+				alert("模拟失败");
+			}
+		}
+		
+		function stopRun() {
+			var st = ABSobj.StopBtn();
+			if (st) {
+				alert("小车已停止！");
+			}
+		}
+	</script>
+	</body>
+</html>

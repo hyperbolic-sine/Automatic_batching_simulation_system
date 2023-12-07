@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>自动配料模拟</title>
+		<link rel="stylesheet" href="./css/index.css" />
+	</head>
+	<body>
+		<div class="borderBox">
+			<h2>电焊条焊药的自动配料模拟系统</h2>
+			<div class="InputBox">
+				<span class="Inp1">材料A<input type="number" id="m_A" min="0" max="100" value="0" maxlength="3" />kg</span>
+				<span class="Inp1">材料B<input type="number" id="m_B" min="0" max="100" value="0" maxlength="3" />kg</span>
+				<span class="Inp2">材料C<input type="number" id="m_C" min="0" max="100" value="0" maxlength="3" />kg</span>
+				<br /><br /><br /><br />
+
+				<span class="Inp1">材料D<input type="number" id="m_D" min="0" max="100" value="0" maxlength="3" />kg</span>
+				<span class="Inp1">材料E<input type="number" id="m_E" min="0" max="100" value="0" maxlength="3" />kg</span>
+				<span class="Inp2">材料F<input type="number" id="m_F" min="0" max="100" value="0" maxlength="3" />kg</span>
+				<br /><br /><br /><br />
+
+				<span style="margin-left: 290px;">计划配料次数<input type="number" id="times" min="1" max="1000" value="1" maxlength="3" />次</span>
+				<br /><br />
+
+				<button onclick="check()">验证并提交</button>
+			</div>
+		</div>
+		<script src="./js/index.js"></script>
+	</body>
+</html>

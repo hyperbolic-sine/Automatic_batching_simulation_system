@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="./css/index.css" />
+	</head>
+	<body>
+		<div class="content">
+			<div class="title">电焊条焊药自动配料模拟系统</div>
+			<div class="family">
+				<div class="wrapper">
+					<div class="input-data">
+						<input type="number" id="m_A" min="0" max="999" maxlength="3" required />
+						<div class="unit">kg</div>
+						<div class="underline"></div>
+						<label>原料A</label>
+					</div>
+				</div>
+				<div class="wrapper fc">
+					<div class="input-data">
+						<input type="number" id="m_B" min="0" max="999" maxlength="3" required />
+						<div class="unit">kg</div>
+						<div class="underline"></div>
+						<label>原料B</label>
+					</div>
+				</div>
+				<div class="wrapper">
+					<div class="input-data">
+						<input type="number" id="m_C" min="0" max="999" maxlength="3" required />
+						<div class="unit">kg</div>
+						<div class="underline"></div>
+						<label>原料C</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="family">
+				<div class="wrapper">
+					<div class="input-data">
+						<input type="number" id="m_D" min="0" max="999" maxlength="3" required />
+						<div class="unit">kg</div>
+						<div class="underline"></div>
+						<label>原料D</label>
+					</div>
+				</div>
+				<div class="wrapper fc">
+					<div class="input-data">
+						<input type="number" id="m_E" min="0" max="999" maxlength="3" required />
+						<div class="unit">kg</div>
+						<div class="underline"></div>
+						<label>原料E</label>
+					</div>
+				</div>
+				<div class="wrapper">
+					<div class="input-data">
+						<input type="number" id="m_F" min="0" max="999" maxlength="3" required />
+						<div class="unit">kg</div>
+						<div class="underline"></div>
+						<label>原料F</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="wrapper" style="width: 400px; margin-left: 260px; margin-top: 50px;">
+				<div class="input-data">
+					<input type="number" id="times" min="0" max="999" maxlength="3" required />
+					<div class="unit">次</div>
+					<div class="underline"></div>
+					<label>计划配料次数</label>
+				</div>
+			</div>
+
+			<div class="button" id="button">
+				<a href="#">验证并提交</a>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			const buttons = document.querySelectorAll('a');
+			buttons[0].addEventListener('click', function(e) {
+				let x = e.clientX - e.target.offsetLeft;
+				let y = e.clientY - e.target.offsetTop;
+
+				let ripples = document.createElement('span');
+				ripples.style.left = x + 'px';
+				ripples.style.top = y + 'px';
+				this.appendChild(ripples);
+
+				setTimeout(function(){
+					ripples.removeNode();
+					check();
+				}, 1000)
+			})
+		</script>
+		<script src="./js/index.js"></script>
+	</body>
+</html>

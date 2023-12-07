@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Active Demo</title>
+		<style>
+			.borderBox {
+				width: 800px;
+				margin: 0 auto;
+				margin-top: 80px;
+			}
+
+			.borderBox>h2 {
+				text-align: center;
+			}
+
+			.InputBox {
+				width: 100%;
+				height: 600px;
+				margin-top: 80px;
+			}
+
+			.Inp1 {
+				width: 100px;
+				margin-right: 154px;
+			}
+
+			input {
+				width: 80px;
+				padding: 4px 0;
+				margin-right: 6px;
+				margin-left: 6px;
+			}
+
+			.Inp2 {
+				padding: 4px 0;
+			}
+
+			button {
+				width: 300px;
+				height: 40px;
+				border-radius: 6px;
+				font-size: 16px;
+				margin-left: 250px;
+				margin-top: 80px;
+			}
+
+			button:hover {
+				background-color: #6495ED;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="borderBox">
+			<h2>电焊条焊药的自动配料模拟系统</h2>
+			<div class="InputBox">
+				<span class="Inp1">材料A<input type="number" id="m_A" min="0" max="100" value="0" maxlength="3"/>kg</span>
+				<span class="Inp1">材料B<input type="number" id="m_B" min="0" max="100" value="0"
+						maxlength="3" />kg</span>
+				<span class="Inp2">材料C<input type="number" id="m_C" min="0" max="100" value="0"
+						maxlength="3" />kg</span>
+				<br /><br /><br /><br />
+
+				<span class="Inp1">材料D<input type="number" id="m_D" min="0" max="100" value="0"
+						maxlength="3" />kg</span>
+				<span class="Inp1">材料E<input type="number" id="m_E" min="0" max="100" value="0"
+						maxlength="3" />kg</span>
+				<span class="Inp2">材料F<input type="number" id="m_F" min="0" max="100" value="0"
+						maxlength="3" />kg</span>
+				<br /><br /><br /><br />
+
+				<span style="margin-left: 290px;">计划配料次数<input type="number" id="times" min="1" max="1000" value="1"
+						maxlength="3" />次</span>
+				<br /><br />
+
+				<button onclick="check()">验证并提交</button>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		function check() {
+			var mA = document.getElementById("m_A").value;
+			var mB = document.getElementById("m_B").value;
+			var mC = document.getElementById("m_C").value;
+			var mD = document.getElementById("m_D").value;
+			var mE = document.getElementById("m_E").value;
+			var mF = document.getElementById("m_F").value;
+			var times = document.getElementById("times").value;
+			
+			if (isInteger(mA) && isInteger(mB) && isInteger(mC) && isInteger(mD) && isInteger(mE) && isInteger(mF) && isInteger(times)) {
+				var sum = parseInt(mA) + parseInt(mB) + parseInt(mC) + parseInt(mD) + parseInt(mE) + parseInt(mF);
+				if ((sum <= 100) && (sum > 0)) {
+					if ((parseInt(times) > 0) && (parseInt(times) <= 1000)) {
+						var materials = new Array;
+						materials[0] = parseInt(mA);
+						materials[1] = parseInt(mB);
+						materials[2] = parseInt(mC);
+						materials[3] = parseInt(mD);
+						materials[4] = parseInt(mE);
+						materials[5] = parseInt(mF);
+						materials[6] = parseInt(times);
+						console.log(materials);
+						// 页面跳转
+						window.location.href="Draw.html?mat=" + materials.toString();
+					}else{
+						alert("配料次数为: " + times + "次, 请保持在1000以内!");
+					}
+				}else{
+					alert("材料总数量为: " + sum + "kg, 请保持在100以内!");
+				}
+			}else{
+				alert("请输入正整数！");
+			}
+		}
+		
+		function isInteger(n) {
+			if (!(/(^[0-9]\d*$)/.test(n))) {
+				return false;
+			}else{
+				return true;
+			}
+		}
+	</script>
+</html>

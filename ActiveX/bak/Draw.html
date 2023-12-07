@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title></title>
+	<style>
+	.borderBox {
+		width: 800px;
+		height: 600px;
+		margin: 0 auto;
+		margin-top: 80px;
+	}
+	
+	.obj {
+		width: 100%;
+		height: 480px;
+	}
+	
+	.obj > h2 {
+		text-align: center;
+	}
+	
+	button {
+		width: 300px;
+		height: 40px;
+		border-radius: 6px;
+		font-size: 16px;
+		margin-left: 250px;
+		margin-top: 60px;
+	}
+	
+	button:hover {
+		background-color: #6495ED;
+		color: white;
+	}
+	</style>
+	</head>
+	<body>
+		<div class="borderBox">
+			<div class="obj">
+				<h2>电焊条焊药的自动配料模拟系统</h2>
+				<object id="ActiveX" classid="CLSID:52ea3b1f-329a-4b39-b044-68240a331df5" width="800px" height="480px"></object>
+			</div>
+			<button onclick="StopRun()">停止配料</button>
+		</div>
+	</body>
+	<script type="text/javascript">
+	var loc = location.href;
+	var str = decodeURI(loc.substr(loc.indexOf('=') + 1, loc.length - loc.indexOf('=')));
+	var matStr = str.split(',');
+	const materials = new Array;
+	for (var i = 0; i < matStr.length; i++) {
+		materials[i] = parseInt(matStr[i]);
+	}
+	
+	var ABS = document.getElementById("ActiveX");
+	if (ABS.object == null) {
+		alert("ActiveX插件未安装!");
+	}
+	
+	setTimeout( function(){
+		run = ABS.SetCtrlParam(materials[0], materials[1], materials[2], materials[3], materials[4], materials[5], materials[6]);
+		if (run) {
+			alert("系统准备中，3秒后开始模拟!");
+		} else {
+			alert("模拟失败!");
+		}
+	}, 1000);
+	
+	function StopRun() {
+		var stop = ABS.StopBtn();
+		if (stop) {
+			alert("模拟停止!");
+			window.location.href="index.html";
+		}
+	}
+	</script>
+</html>

@@ -1,0 +1,31 @@
+﻿  Processing .\ActiveX.idl
+  ActiveX.idl
+  Processing D:\Windows Kits\10\Include\10.0.19041.0\um\oaidl.idl
+  oaidl.idl
+  Processing D:\Windows Kits\10\Include\10.0.19041.0\um\objidl.idl
+  objidl.idl
+  Processing D:\Windows Kits\10\Include\10.0.19041.0\um\unknwn.idl
+  unknwn.idl
+  Processing D:\Windows Kits\10\Include\10.0.19041.0\shared\wtypes.idl
+  wtypes.idl
+  Processing D:\Windows Kits\10\Include\10.0.19041.0\shared\wtypesbase.idl
+  wtypesbase.idl
+  Processing D:\Windows Kits\10\Include\10.0.19041.0\shared\basetsd.h
+  basetsd.h
+  Processing D:\Windows Kits\10\Include\10.0.19041.0\shared\guiddef.h
+  guiddef.h
+  Processing D:\Windows Kits\10\Include\10.0.19041.0\um\oaidl.acf
+  oaidl.acf
+  pch.cpp
+  ActiveX.cpp
+  ActiveXCtrl.cpp
+F:\codes\MixProjects\ABS\ActiveX\ActiveXCtrl.cpp(210,24): warning C4101: “e”: 未引用的局部变量
+  ActiveXPropPage.cpp
+  AnimateDlg.cpp
+  CPublic.cpp
+    正在创建库 F:\codes\MixProjects\ABS\ActiveX\Release\ActiveX.lib 和对象 F:\codes\MixProjects\ABS\ActiveX\Release\ActiveX.exp
+  正在生成代码
+  Previous IPDB not found, fall back to full compilation.
+  All 229 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  ActiveX.vcxproj -> F:\codes\MixProjects\ABS\ActiveX\Release\ActiveX.ocx
